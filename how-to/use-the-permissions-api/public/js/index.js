@@ -2,8 +2,8 @@
  * Initialize the DOM.
  */
 function initializeDOM() {
-	const endpointURL = 'https://sandbox-dev.os.openfin.co/entitlement/api/assigned/subjects/user/permission';
-	const apiKey = 'b57b28e76f1e3e0460faf5dbd46b5d7f';
+	const endpointURL = '<PROVIDE A VALID ENDPOINT URL>';
+	const apiKey = '<PROVIDE A VALID API KEY>';
 	
 	const actionButton = document.querySelector('#callAPIbutton')
 	const logOutput = document.querySelector("#logOutput");
