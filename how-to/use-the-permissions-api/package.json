@@ -1,0 +1,15 @@
+{
+  "name": "permissions-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Ameet Jayawant (ameet.jayawant@here.io)",
+  "license": "ISC",
+  "description": "A sample Node JS app showing how to retrieve permissions information from the Here.io api",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}

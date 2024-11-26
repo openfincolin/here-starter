@@ -1,0 +1,11 @@
+const express = require('express');
+const path = require('path');
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.listen(3000, () => {
+    console.log('App is listening on port 3000.');
+    console.log("Please open your browser and navigate to http://localhost:3000")
+})
