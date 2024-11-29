@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./server/server.js"
   },
   "keywords": [],
   "author": "Ameet Jayawant (ameet.jayawant@here.io)",
@@ -11,5 +11,8 @@
   "description": "A sample Node JS app showing how to retrieve permissions information from the Here.io api",
   "dependencies": {
     "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
   }
 }
