@@ -19,14 +19,20 @@ To run this sample you can
 npm install
 ```
 
-2. Provide url and api key in the code file index.js that can be found in /public/js. The values to provide are for the variables shown below.
+2. To build your application please run the following command
+
+```shell
+npm run build
+```
+
+3. Provide url and api key in the code file index.js that can be found in /public/js. The values to provide are for the variables shown below.
 
 ```js
     const endpointURL = <PROVIDE A VALID ENDPOINT URL>
     const apiKey = <PROVIDE A VALID API KEY>
 ```
 
-3. Run the application.
+4. Run the application.
 
 ```shell
 npm run start
