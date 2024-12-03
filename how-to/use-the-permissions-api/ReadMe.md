@@ -25,11 +25,11 @@ npm install
 npm run build
 ```
 
-3. Provide url and api key in the code file index.js that can be found in /public/js. The values to provide are for the variables shown below.
+3. Provide domain (without the trailing "/") and api key in the code file index.ts that can be found in ./client/src. The values to provide are for the variables shown below.
 
 ```js
-    const endpointURL = <PROVIDE A VALID ENDPOINT URL>
-    const apiKey = <PROVIDE A VALID API KEY>
+    const DOMAIN = <PROVIDE YOUR DOMAIN HERE. Eg. https://my-domain/com>
+    const API_KEY = <PROVIDE A VALID API KEY>
 ```
 
 4. Run the application.
