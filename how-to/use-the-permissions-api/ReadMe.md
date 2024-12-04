@@ -1,9 +1,9 @@
 
-# Permissions API Starter
+# Entitlements API Starter
 
-## Welcome to the Permissions API How To
+## Welcome to the Entitlements API How To
 
-This how to provides an example of how to query the Permissions api provided by the Here platform.
+This how to provides an example of how to query the Entitlements api provided by the Here platform.
 
 ## Running the Sample
 
