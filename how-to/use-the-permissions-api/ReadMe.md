@@ -19,17 +19,17 @@ To run this sample you can
 npm install
 ```
 
-2. To build your application please run the following command
-
-```shell
-npm run build
-```
-
-3. Provide domain (without the trailing "/") and api key in the code file index.ts that can be found in ./client/src. The values to provide are for the variables shown below.
+2. Provide domain (without the trailing "/") and api key in the code file index.ts that can be found in ./client/src. The values to provide are for the variables shown below.
 
 ```js
     const DOMAIN = <PROVIDE YOUR DOMAIN HERE. Eg. https://my-domain/com>
     const API_KEY = <PROVIDE A VALID API KEY>
+```
+
+3. To build your application please run the following command
+
+```shell
+npm run build
 ```
 
 4. Run the application.
@@ -38,6 +38,6 @@ npm run build
 npm run start
 ```
 
-3. On the application screen click on the "Call API" button. In a few seconds you should see the area below the buttons populate with the requisite information.
+5. On the application screen select any or all of the apis for which you want to produce an output and then click on the "Call API" button. In a few seconds you should see the area below the buttons populate with the requisite information.
 
-4. You may click on the "Copy to Clipboard" button to copy the text to the clipboard and then paste it into your favorite editor.
+6. The resulting json files will be automatically downloaded to your computer.
