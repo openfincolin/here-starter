@@ -25,19 +25,19 @@ npm install
     const API_KEY = <PROVIDE A VALID API KEY>
 ```
 
-4. To build your application please run the following command
+3. To build your application please run the following command
 
 ```shell
 npm run build
 ```
-5. Run the application.
+4. Run the application.
 
 ```shell
 npm run start
 ```
 
-6. On the application screen select any or all of the apis for which you want to produce an output and then click on the "Call API" button. In a few seconds you should see the area below the buttons populate with the requisite process progress information.
+5. On the application screen select any or all of the apis for which you want to produce an output and then click on the "Call API" button. In a few seconds you should see the area below the buttons populate with the requisite process progress information.
 
-7. The resulting json files will be automatically downloaded to your computer.
+6. The resulting json files will be automatically downloaded to your computer.
 
-8. Rebuild the project if you have changed the code. See step 3 above.
+7. Rebuild the project if you have changed the code. See step 3 above.
