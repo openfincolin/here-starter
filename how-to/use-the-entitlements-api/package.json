@@ -14,10 +14,10 @@
   "license": "SEE LICENSE IN LICENSE.MD",
   "description": "A sample Node JS app showing how to use the Entitlements api provided by Here.io",
   "dependencies": {
-    "express": "^4.21.1"
+
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
+
     "@types/node": "^22.10.1",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
