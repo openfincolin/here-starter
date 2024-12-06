@@ -20,14 +20,21 @@ npm install
 ```
 
 2. Provide domain (without the trailing "/") and api key in the code file index.ts that can be found in ./client/src. The values to provide are for the variables shown below.
-    const DOMAIN = <PROVIDE YOUR DOMAIN HERE. Eg. https://my-domain.com>
+```js
+   const DOMAIN = <PROVIDE YOUR DOMAIN HERE. Eg. https://my-domain.com>
     const API_KEY = <PROVIDE A VALID API KEY>
+```
 
 3. To build your application please run the following command
-npm run build
 
+```shell
+npm run build
+```
 4. Run the application.
+
+```shell
 npm run start
+```
 
 5. On the application screen select any or all of the apis for which you want to produce an output and then click on the "Call API" button. In a few seconds you should see the area below the buttons populate with the requisite process progress information.
 
