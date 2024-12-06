@@ -4,10 +4,9 @@
   "main": "./server/build/server.js",
 	"bin": "./server/build/server.js",
   "scripts": {
-    "start": "node ./server/build/server.js",
+    "start": "npx --yes http-server ./public -p 8181 -c-1",
     "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-    "build-server": "tsc --project ./server",
-    "build": "npm run build-server && npm run build-client",
+    "build": "npm run build-client",
     "setup": "npm install && npm run build"
   },
   "keywords": [],
