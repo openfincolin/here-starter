@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Entitlements API</title>
+		<link rel="icon" type="image/x-icon" href="./favicon.ico" />
+		<link rel="stylesheet" href="./styles/app.css" />
+		<script src="./js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<h1>Entitlements API How-To</h1>
+
+			<div class="row middle gap10">
+				<image src="./images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="form fill scroll-vertical">
+			<div class="col">
+				<label>Types of API Calls</label>				
+				<br/>
+				<div class="row gap10 middle">
+					<fieldset class="row">
+						<label for="chkMyRoles">Roles and Permissions Assigned to Me</label>
+						<input type="checkbox" id="chkMyRoles" />
+					</fieldset>
+					<fieldset class="row">
+						<label for="chkSubjectPermissions">Subject and Related Permissions for All Subjects</label>
+						<input type="checkbox" id="chkSubjectPermissions" />
+					</fieldset>
+					<fieldset class="row">
+						<label for="chkRolesPermissions">All Roles and their Related Permissions</label>
+						<input type="checkbox" id="chkRolesPermissions" />
+					</fieldset>
+					<fieldset class="row">
+						<label for="chkPermissions">A List of All Permissions</label>
+						<input type="checkbox" id="chkPermissions" />
+					</fieldset>					
+				</div>
+				<br/><br/>
+                <span>
+					<button id="callAPIbutton">Call API</button>
+				</span>
+                <br />
+                <label id="status"></label>
+			</div>
+                <pre id="logOutput" class="fill scroll-vertical" style="min-height: 100%;" ></pre>
+		</main>
+	</body>
+</html>
