@@ -1,21 +1,56 @@
-
-export type OpenLibrarySearchResultData = {
-    authorId: string;
+/**
+ * Interface for the configuration.
+ */
+export interface OpenLibrarySearchResultData {
+	/**
+	 * The id of the author.
+	 */
+	authorId: string;
 }
 
-export type OpenLibraryDocument = {
-    author_key: string[];
-    author_name: string[];
-    cover_edition_key: string;
-    publisher: string;
-    title: string;
-};
+/**
+ * Interface for a search result.
+ */
+export interface OpenLibraryDocument {
+	/**
+	 * The key of the author.
+	 */
+	author_key: string[];
+	/**
+	 * The name of the author.
+	 */
+	author_name: string[];
+	/**
+	 * The key of the document.
+	 */
+	cover_edition_key: string;
+	/**
+	 * The publisher of the document.
+	 */
+	publisher: string;
+	/**
+	 * The title of the document.
+	 */
+	title: string;
+}
 
-export type OpenLibrarySearchResult = {
-    start: number;  
-    numFound: number;
-    docs: OpenLibraryDocument[];
-};
+/**
+ * Interface for a search result.
+ */
+export interface OpenLibrarySearchResult {
+	/**
+	 * The number of results found.
+	 */
+	start: number;
+	/**
+	 * The number of results found.
+	 */
+	numFound: number;
+	/**
+	 * The results found.
+	 */
+	docs: OpenLibraryDocument[];
+}
 
 /**
  * Interface for a logger.

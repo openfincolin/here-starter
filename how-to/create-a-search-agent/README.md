@@ -5,29 +5,12 @@
 
 This how to provides an example of how to create a search agent that can be used within Enterprise Browser.
 
-## Running the Sample
+You will need to have access to an Enterprise Browser instance and you will need Admin rights so that you can add a search agent.
 
-To run this sample you need to have access to an instance of Enterprise Browser and have the admin rights (or contact someone who does) required to add a Search Agent entry.
+Instructions on how to configure a search agent can be found here: <https://resources.here.io/docs/guide/admins/agents>.
 
-- Clone this repo and follow the instructions below. This will let you customize the sample.
+### Examples
 
-## Getting Started
-
-1. Install the dependencies.
-
-```shell
-npm install
-```
-
-2. To build your application please run the following command
-
-```shell
-npm run build
-```
-4. Run the application.
-
-```shell
-npm run start
-```
-
-5. Once your server is running and you have a search agent entry pointing to your local url then you should be able to type in TSLA to see a response.
+| Example                                                                 | Description                                                                                                                 |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [OpenLibrary Agent](./agents/openlibrary/README.md)   | This is a basic search agent that searches open library and lets you launch OpenLibrary web pages inside of Enterprise Browser.  |
