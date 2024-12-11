@@ -1,5 +1,5 @@
 {
-  "name": "permissions-api",
+  "name": "here-starter-permissions-api",
   "version": "1.0.0",
   "main": "./server/build/server.js",
 	"bin": "./server/build/server.js",
@@ -12,12 +12,11 @@
   "keywords": [],
   "author": "Ameet Jayawant (ameet.jayawant@here.io)",
   "license": "SEE LICENSE IN LICENSE.MD",
-  "description": "A sample Node JS app showing how to use the Entitlements api provided by Here.io",
+  "description": "A sample app showing how to use the Entitlements api provided by Here.io",
   "dependencies": {
 
   },
   "devDependencies": {
-
     "@types/node": "^22.10.1",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
