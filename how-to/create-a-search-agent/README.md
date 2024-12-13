@@ -13,4 +13,4 @@ Instructions on how to configure a search agent can be found here: <https://reso
 
 | Example                                                                 | Description                                                                                                                 |
 | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| [OpenLibrary Agent](./agents/openlibrary/README.md)   | This is a basic search agent that searches open library and lets you launch OpenLibrary web pages inside of Enterprise Browser.  |
+| [OpenLibrary Agent](./agents/openlibrary)   | This is a basic search agent that searches open library and lets you launch OpenLibrary web pages inside of Enterprise Browser.  |
