@@ -11,3 +11,5 @@ out
 updatable-packages.txt
 public-github
 chromedriver*
+package-lock.json
+package-lock.json
