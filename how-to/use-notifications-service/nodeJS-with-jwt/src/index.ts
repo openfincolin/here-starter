@@ -178,35 +178,9 @@ if (parsedArgs.newNotification) {
         ttlSeconds: 120,
       },
       {
-        aMessage: "This is an updated message",
-        title: "Updated Notification Title",
         template: "custom",
-        toast: "transient",
         templateData: {
           textData: "This is an updated message for the notification",
-        },
-        templateOptions: {
-          body: {
-            fallbackText: "Updated fallback text",
-            compositions: [
-              {
-                minTemplateAPIVersion: "1",
-                layout: {
-                  type: "container",
-                  children: [
-                    {
-                      optional: true,
-                      type: "text",
-                      dataKey: "textData",
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-          indicator: {
-            color: "blue",
-          },
         },
       }
     );
