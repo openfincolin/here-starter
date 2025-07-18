@@ -3,11 +3,13 @@ import {
   ConnectionResult,
   ConnectParameters,
 } from "@openfin/cloud-notification-core-api";
-import yargs from "yargs";
+import yargs, { parsed } from "yargs";
 import chalk from "chalk";
 
 import "dotenv-defaults/config.js";
 import readline from "node:readline/promises";
+import { title } from "node:process";
+import createToken from "./create-token.js";
 
 const parsedArgs = await yargs(process.argv.slice(2))
   .option("source", {
@@ -38,13 +40,11 @@ const terminal = readline.createInterface({
   output: process.stdout,
 });
 
-if (
-  !process.env.AUTHENTICATION_BASIC_USERNAME ||
-  !process.env.AUTHENTICATION_BASIC_PASSWORD ||
-  !process.env.NOTIFICATION_SERVER_HOST
-) {
+terminal.write(chalk.blueBright(JSON.stringify(parsedArgs, null, 2)));
+
+if (!process.env.NOTIFICATION_SERVER_HOST) {
   terminal.write(
-    chalk.redBright(`\n\nEnvironment not setup - See README.md\n`)
+    chalk.redBright(`\n\nEnvironment not setup - See README.md\n\n`)
   );
   process.exit(1);
 }
@@ -58,15 +58,21 @@ if (
   process.exit(1);
 }
 
-const connectSettings: ConnectParameters = {
-  platformId: parsedArgs.platform,
-  sourceId: parsedArgs.source,
-  authenticationType: "basic",
-};
+const jwtToken = createToken();
+terminal.write(chalk.green(`\r\n\nJWT Token: ${jwtToken}\n`));
 
-connectSettings.basicAuthenticationParameters = {
-  username: process.env.AUTHENTICATION_BASIC_USERNAME,
-  password: process.env.AUTHENTICATION_BASIC_PASSWORD,
+const connectSettings: ConnectParameters = {
+  sourceId: parsedArgs.source,
+  platformId: parsedArgs.platform,
+  authenticationType: "jwt",
+  jwtAuthenticationParameters: {
+    authenticationId: process.env.JWT_AUTHENTICATION_ID || "No-ID-Provided", // This is the authenticationId of the jwt-api auth settings in the org
+
+    // This is a callback to handle expired tokens or periodic recreation of the token - every time a token is required this will be called
+    jwtRequestCallback: () => {
+      return jwtToken;
+    },
+  },
 };
 
 let notificationApi = new CloudNotificationAPI({
@@ -173,6 +179,35 @@ if (parsedArgs.newNotification) {
       },
       {
         aMessage: "This is an updated message",
+        title: "Updated Notification Title",
+        template: "custom",
+        toast: "transient",
+        templateData: {
+          textData: "This is an updated message for the notification",
+        },
+        templateOptions: {
+          body: {
+            fallbackText: "Updated fallback text",
+            compositions: [
+              {
+                minTemplateAPIVersion: "1",
+                layout: {
+                  type: "container",
+                  children: [
+                    {
+                      optional: true,
+                      type: "text",
+                      dataKey: "textData",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          indicator: {
+            color: "blue",
+          },
+        },
       }
     );
     terminal.write(chalk.green(`\nNotification was updated\n`));
@@ -184,10 +219,6 @@ if (parsedArgs.newNotification) {
 await notificationApi.disconnect();
 terminal.write(chalk.green(`\nSession Disconnected\n`));
 process.exit(0);
-
-function clearScreen() {
-  terminal.write("\x1Bc"); // Clear the terminal
-}
 
 async function handleRaiseNotification(): Promise<string> {
   const notificationGroups = ["all-users"];
@@ -205,7 +236,7 @@ async function handleRaiseNotification(): Promise<string> {
     {
       template: "custom",
       toast: "transient",
-      title: "Sticky Notification $XYZ",
+      title: "Generated using JWT API Auth",
       templateData: {
         textData:
           "Place a quick market order at the prevailing market price for $XYZ",
