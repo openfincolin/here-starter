@@ -169,20 +169,23 @@ if (parsedArgs.newNotification) {
   }
 } else if (parsedArgs.updateNotification !== "") {
   terminal.write(
-    chalk.yellow(`\n\nUpdating notification ${parsedArgs.updateNotification}\n`)
+    chalk.magentaBright(
+      `\n\nUpdating notification ${parsedArgs.updateNotification}\n`
+    )
   );
   try {
+    const payload = getNCUpdatePayload("This is the updated notification text");
+    terminal.write(
+      chalk.blueBright(
+        `\nPayload for update: ${JSON.stringify(payload, null, 2)}\n`
+      )
+    );
     await notificationApi.updateNotification(
       parsedArgs.updateNotification,
       {
         ttlSeconds: 120,
       },
-      {
-        template: "custom",
-        templateData: {
-          textData: "This is an updated message for the notification",
-        },
-      }
+      payload
     );
     terminal.write(chalk.green(`\nNotification was updated\n`));
   } catch (error) {
@@ -211,6 +214,7 @@ async function handleRaiseNotification(): Promise<string> {
       template: "custom",
       toast: "transient",
       title: "Generated using JWT API Auth",
+      platform: "bmo-x---desktop-dev-notifications-provider",
       templateData: {
         textData:
           "Place a quick market order at the prevailing market price for $XYZ",
@@ -307,5 +311,38 @@ async function handleRaiseNotification(): Promise<string> {
     }
   );
 
+  terminal.write(
+    chalk.magentaBright(
+      `\nResult for new notification: ${JSON.stringify(result, null, 2)}\n`
+    )
+  );
   return result.notificationId;
+}
+
+/**
+ * Generates a payload for updating a notification.
+ * @param {string} [message] - The message to include in the notification.
+ * @returns {object} The payload for the notification update.
+ * See https://developer.openfin.co/docs/services/notifications/stable/api/interfaces/BaseUpdatableNotificationOptions.html
+ * for update options
+ */
+function getNCUpdatePayload(message?: string) {
+  return {
+    platform: "bmo-x---desktop-dev-notifications-provider",
+    template: "custom",
+    templateData: {
+      textData: message || "Updated message for Notification",
+    },
+    buttons: [
+      {
+        title: "Submit Updated",
+        iconUrl: "favicon.ico",
+        submit: true,
+        formOptions: {
+          submittingTitle: "Form Submitting",
+          successTitle: "Submitted",
+        },
+      },
+    ],
+  };
 }
