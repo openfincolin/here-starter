@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openfin.CloudNotificationAPI;
 import com.openfin.CloudNotificationAPIError;
@@ -48,14 +47,35 @@ public class App {
   };
 
   private static final String j = "{\n" +
-      "\"indicator\":\n" +
-      "  {\n" +
-      "    \"color\": \"orange\",\n" +
-      "    \"text\": \"News Alert\"\n" +
-      "  },\n" +
-      "  \"toast\": \"transient\",\n" +
+      "  \"template\": \"custom\",\n" +
       "  \"title\": \"Java Notification\",\n" +
-      "  \"body\": \"${NEWS_HEADLINE}\",\n" +
+      "  \"toast\": \"transient\",\n" +
+      "  \"templateData\": {\n" +
+      "    \"textData\": \"${NEWS_HEADLINE}\"\n" +
+      "  },\n" +
+      "  \"templateOptions\": {\n" +
+      "    \"body\": {\n" +
+      "      \"fallbackText\": \"fallback text\",\n" +
+      "      \"compositions\": [\n" +
+      "        {\n" +
+      "          \"minTemplateAPIVersion\": \"1\",\n" +
+      "          \"layout\": {\n" +
+      "            \"type\": \"container\",\n" +
+      "            \"children\": [\n" +
+      "              {\n" +
+      "                \"optional\": true,\n" +
+      "                \"type\": \"text\",\n" +
+      "                \"dataKey\": \"textData\"\n" +
+      "              }\n" +
+      "            ]\n" +
+      "          }\n" +
+      "        }\n" +
+      "      ]\n" +
+      "    },\n" +
+      "    \"indicator\": {\n" +
+      "      \"color\": \"purple\"\n" +
+      "    }\n" +
+      "  },\n" +
       "  \"buttons\": [\n" +
       "    {\n" +
       "      \"title\": \"Click Me\",\n" +
@@ -88,7 +108,6 @@ public class App {
     String platformId = args[1];
     String action = args.length > 2 ? args[2] : "newNotification";
 
-
     // API setup and connection
     CloudNotificationSettings settings = new CloudNotificationSettings(serviceUrl);
 
@@ -98,7 +117,6 @@ public class App {
         sourceId,
         new ConnectParameters.JwtAuthenticationParameters(() -> token, authenticationId));
 
-
     CloudNotificationAPI api = new CloudNotificationAPI(settings);
 
     System.out.println("Connecting to notification service at " + serviceUrl + " with sourceId: " + sourceId
@@ -107,8 +125,7 @@ public class App {
     try {
       api.connect(connectParams);
     } catch (CloudNotificationAPIError e) {
-      System.err.println("Failed to connect to notification service: " + e.getMessage());
-      logger.error("Failed to connect to notification service {}", e.getCause());
+      System.err.println("Failed to connect to notification service: " + e.getCause());
       System.exit(1);
     }
 
@@ -121,16 +138,31 @@ public class App {
     // Parse the action argument and perform the corresponding operation
     String[] actionArray = action.split("=");
     if (actionArray[0].equals("newNotification")) {
-      displayNotification(api, "default-notification-id");
+      displayNotification(api);
     } else if (actionArray[0].equals("updateNotification")) {
-      String notificationId = actionArray.length > 1 ? actionArray[1] : "default-notification-id";
+      if (actionArray.length != 2) {
+        System.out.println("Usage: updateNotification=<notificationId>");
+        System.exit(1);
+      }
+
+      String notificationId = actionArray[1];
+      System.out.println("Updating notification with id: " + notificationId);
+
       updateNotification(api, notificationId);
     } else if (actionArray[0].equals("deleteNotification")) {
-      String notificationId = actionArray.length > 1 ? actionArray[1] : "default-notification-id";
+      if (actionArray.length != 2) {
+        System.out.println("Usage: deleteNotification=<notificationId>");
+        System.exit(1);
+      }
+
+      String notificationId = actionArray[1];
+      System.out.println("Deleting notification with id: " + notificationId);
+
       deleteNotification(api, notificationId);
     } else {
       System.out.println("Unknown action: " + action);
-      System.out.println("Available actions: newNotification, updateNotification, deleteNotification");
+      System.out.println(
+          "Available actions: newNotification, updateNotification=<notificationId>, deleteNotification=<notificationId>");
       System.exit(1);
     }
 
@@ -139,7 +171,7 @@ public class App {
     System.exit(0);
   }
 
-  private static void displayNotification(CloudNotificationAPI api, String notificationId) {
+  private static void displayNotification(CloudNotificationAPI api) {
     Random random = new Random();
     int index = random.nextInt(HEADLINES.length);
     String updateJson = j.replace("${NEWS_HEADLINE}", HEADLINES[index]);
@@ -148,24 +180,42 @@ public class App {
       Object payload = objectMapper.readValue(updateJson, Object.class);
 
       String lastNotificationId = api.raiseNotification(
-          new NotificationOptions("corr-1234",
+          new NotificationOptions("correlation-id-1234",
               new NotificationTargets(new String[] { "all-users" }, new String[] {})),
           payload);
-      System.out.println("Notification raised with id: " + lastNotificationId);
+      System.out.println("New Notification raised with id: " + lastNotificationId);
     } catch (Exception e) {
-      System.err.println("Error raising notification " + e);
+      System.err.println("Error raising notification " + e.getCause());
     }
   }
 
   private static void updateNotification(CloudNotificationAPI api, String notificationId) {
     try {
       ObjectMapper objectMapper = new ObjectMapper();
-      JsonNode updateJson = objectMapper.readTree("{\n" +
-                    "  \"template\": \"custom\",\n" +
-                    "  \"templateData\": {\n" +
-                    "    \"textData\": \"This is an updated message for the notification\"\n" +
-                    "  }\n" +
-                    "}");      
+      Object updateJson = objectMapper.readValue("{\n" +
+          "  \"template\": \"custom\",\n" +
+          "  \"templateData\": {\n" +
+          "    \"textData\": \"Updated Notification Text\"\n" +
+          "  },\n" +
+          "  \"buttons\": [\n" +
+          "    {\n" +
+          "      \"title\": \"Click Me Again\",\n" +
+          "      \"cta\": true,\n" +
+          "      \"type\": \"button\",\n" +
+          "      \"onClick\": {\n" +
+          "        \"button1Data\": 1\n" +
+          "      }\n" +
+          "    },\n" +
+          " {\n" +
+          "      \"title\": \"Or Click Me Again\",\n" +
+          "      \"cta\": true,\n" +
+          "      \"type\": \"button\",\n" +
+          "      \"onClick\": {\n" +
+          "        \"button2Data\": 2\n" +
+          "      }\n" +
+          "    }\n" +
+          "  ]\n" +
+          "}", Object.class);
       NotificationUpdateOptions options = new NotificationUpdateOptions(120);
       api.updateNotification(notificationId, options, updateJson);
       System.out.println("Notification updated with id: " + notificationId);
@@ -198,7 +248,6 @@ public class App {
         System.out.println("Notification Event RESULT: " + map.get("result").toString());
       }
     }
-
   }
 
   private static void onDisconnected() {
