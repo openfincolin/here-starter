@@ -10,9 +10,9 @@ A very simple Java application that raises notifications using the Here Cloud No
 ## Running the application
 
 1. Ensure the following variables are defined in a root `.env` file:
-    - NOTIFICATION_SERVER_HOST: url of the notification server
-    - JWT_TOKEN: generate a jwt and copy here
-    - JWT_AUTHENTICATION_ID: authentication id for the jwt
+    - NOTIFICATION_SERVER_HOST: URL of the notification server. Please reach out to Here.io support for this information.
+    - JWT_TOKEN: Generate a JWT and copy to the env file.
+    - JWT_AUTHENTICATION_ID: Authentication ID for the JWT. Please reach out to Here.io support for this information.
 
 2. Run `mvn clean compile` (not sure if `clean` is necessary, but I have been including it)
 
