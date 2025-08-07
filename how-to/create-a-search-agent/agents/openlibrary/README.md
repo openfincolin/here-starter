@@ -34,6 +34,6 @@ npm run start
 - Add `http://localhost:8181` as an allowed domain so that the locally hosted agent can be accessed.
 - Check the box for **"Allow Here™ API Access"** in the admin console. This enables the agent to communicate properly with Enterprise Browser.
 
-Instructions on how to add an application can be found here: <https://resources.here.io/docs/guide/admins/content>
+   Instructions on how to add an application can be found here: <https://resources.here.io/docs/guide/admins/content>
 
 7. Once you are in Enterprise Browser and you have the search agent running you will be able to see results when you type a query that finds a match e.g. 'charles'.
